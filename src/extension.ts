@@ -60,9 +60,13 @@ class TanakhController {
   public constructor(tanakh: Tanakh) {
     this.tanakh = tanakh
     let subscriptions: vscode.Disposable[] = []
-    vscode.window.onDidChangeTextEditorSelection(this.tanakh.update, this, subscriptions)
+    vscode.window.onDidChangeTextEditorSelection(this.update, this, subscriptions)
     this.tanakh.update()
     this.disposable = vscode.Disposable.from(...subscriptions)
+  }
+
+  public update() {
+    this.tanakh.update()
   }
 
   public dispose() {

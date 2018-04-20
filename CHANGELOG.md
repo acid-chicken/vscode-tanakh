@@ -11,3 +11,9 @@ Check [Keep a Changelog](https://keepachangelog.com/) for recommendations on how
 ### Added
 
 - Beautiful spinning tanakh
+
+## [1.0.1]
+
+### Fixed
+
+- The tanakh doesn't spin automatically.
