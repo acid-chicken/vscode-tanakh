@@ -2,7 +2,7 @@
   "name": "tanakh",
   "displayName": "tanakh",
   "description": "(´･_･`)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "acid-chicken",
   "license": "MIT",
   "engines": {
@@ -22,9 +22,25 @@
     "commands": [
       {
         "command": "extension.updateTanakh",
-        "title": "たなこふ"
+        "title": "%extension.tanakh.name%"
+      },
+      {
+        "command": "extension.updateTanakhPattern",
+        "title": "%extension.tanakh.name%"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "%extension.tanakh.name%",
+      "properties": {
+        "tanakh.defaultPattern": {
+          "type": "number",
+          "default": 0,
+          "description": "%extension.tanakh.defaultPattern%",
+          "scope": "window"
+        }
+      }
+    }
   },
   "main": "./out/src/extension",
   "scripts": {

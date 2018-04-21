@@ -5,12 +5,13 @@ import * as vscode from 'vscode'
 export function activate(context: vscode.ExtensionContext) {
   let tanakh = new Tanakh()
   let controller = new TanakhController(tanakh)
-  let disposable = vscode.commands.registerCommand('extension.updateTanakh', () => {
+  let updateTanakh = vscode.commands.registerCommand('extension.updateTanakh', () => {
     tanakh.update()
   })
-  context.subscriptions.push(controller)
-  context.subscriptions.push(tanakh)
-  context.subscriptions.push(disposable)
+  let updateTanakhPattern = vscode.commands.registerCommand('extension.updateTanakhPattern', () => {
+    tanakh.updatePattern()
+  })
+  context.subscriptions.push(controller, tanakh, updateTanakh, updateTanakhPattern)
 }
 
 export function deactivate() {
@@ -18,13 +19,21 @@ export function deactivate() {
 
 class Tanakh {
   public constructor() {
-    this.status.command = 'extension.updateTanakh'
+    this.status.command = 'extension.updateTanakhPattern'
     this.status.tooltip = 'たなこふ'
+    let configuration = vscode.workspace.getConfiguration('tanakh')
+    configuration.has('defaultPattern') && (this.pattern = configuration.get('defaultPattern'))
   }
 
   public update() {
     this.counter++
-    this.status.text = this.faces[this.counter %= this.faces.length]
+    this.status.text = this.faces[this.pattern][this.counter %= this.faces[this.pattern].length]
+    this.status.show()
+  }
+
+  public updatePattern() {
+    this.pattern++
+    this.status.text = this.faces[this.pattern %= this.faces.length][this.counter = 0]
     this.status.show()
   }
 
@@ -34,22 +43,104 @@ class Tanakh {
 
   private status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right)
 
+  private pattern = 0
+
   private counter = 0
 
   private faces = [
-    '  (´･_･`)´･_･`)  ',
-    '   (´･_･`)_･`)   ',
-    '    (´･_･`)`)    ',
-    '    ((´･_･`)     ',
-    '   (´･(´･_･`)    ',
-    '   (´･_(´･_･`)   ',
-    '  (´･_･`)´･_･`)  ',
-    '   (´･_･`)_･`)   ',
-    '    (´･_･`)`)    ',
-    '    (´･_･`))     ',
-    '     ((´･_･`)    ',
-    '    (´･(´･_･`)   ',
-    '   (´･_(´･_･`)   '
+    [
+      '  (´･_･`)´･_･`)  ',
+      '   (´･_･`)_･`)   ',
+      '    (´･_･`)`)    ',
+      '    ((´･_･`)     ',
+      '   (´･(´･_･`)    ',
+      '   (´･_(´･_･`)   ',
+      '  (´･_･`)´･_･`)  ',
+      '   (´･_･`)_･`)   ',
+      '    (´･_･`)`)    ',
+      '    (´･_･`))     ',
+      '     ((´･_･`)    ',
+      '    (´･(´･_･`)   ',
+      '   (´･_(´･_･`)   '
+    ],
+    [
+      '( ´･_･`)∩ $(keyboard)',
+      '( ´･_･`)つ $(keyboard)'
+    ],
+    [
+      '(´･_･`)   $(telescope)',
+      '(´･_･`)  $(telescope)',
+      '(´･_･`) $(telescope)',
+      '(´･_･`)$(telescope)',
+      '(´･_･`$(telescope)',
+      '(´･_･$(telescope)',
+      '(´･_$(telescope)',
+      '(´･_･`$(bug)',
+      '(´･_･`)$(bug)',
+      '(´･_･`)  $(bug)'
+    ],
+    [
+      '        $(gift)   ',
+      ')       $(gift)   ',
+      '`)      $(gift)   ',
+      '･`)     $(gift)   ',
+      '_･`)    $(gift)   ',
+      '･_･`)   $(gift)   ',
+      '´･_･`)  $(gift)   ',
+      '(´･_･`) $(gift)   ',
+      ' (´･_･`)$(gift)   ',
+      '  (´･_･`)$(gift)  ',
+      '   (´･_･`)$(gift) ',
+      '    (´･_･`)$(gift)',
+      '     (´･_･`)   ',
+      '      (´･_･`)  ',
+      '       (´･_･`) ',
+      '        (´･_･`)',
+      '         (´･_･`',
+      '          (´･_･',
+      '           (´･_',
+      '            (´･',
+      '             (´',
+      '              (',
+      '               '
+    ],
+    [
+      '$(watch)(´･_･`)$(bug)$(bug)$(bug)$(bug)',
+      '$(watch)(´･_･`) $(zap) $(bug)$(bug)$(bug)',
+      '$(watch)(´･_･`)$(flame)$(bug)$(bug)$(bug)',
+      '   $(watch)(´･_･`)$(bug)$(bug)$(bug)',
+      '   $(watch)(´･_･`) $(zap) $(bug)$(bug)',
+      '   $(watch)(´･_･`)$(flame)$(bug)$(bug)',
+      '      $(watch)(´･_･`)$(bug)$(bug)',
+      '      $(watch)(´･_･`) $(zap) $(bug)',
+      '      $(watch)(´･_･`)$(flame)$(bug)',
+      '         $(watch)(´･_･`)$(bug)',
+      '         $(watch)(´･_･`) $(zap) ',
+      '         $(watch)(´･_･`)$(flame)',
+      '            $(watch)(´･_･`)',
+      '             $(watch)(´･_･`',
+      '              $(watch)(´･_･',
+      '               $(watch)(´･_',
+      '                $(watch)(´･',
+      '                 $(watch)(´',
+      '                  $(watch)(',
+      '                   $(watch)',
+      '                      ',
+      '                   $(bug)',
+      '                $(bug)   ',
+      '                $(bug)$(bug)',
+      '             $(bug)      ',
+      '             $(bug)   $(bug)',
+      ')            $(bug)$(bug)   ',
+      '`)           $(bug)$(bug)$(bug)',
+      '･`)       $(bug)         ',
+      '_･`)      $(bug)      $(bug)',
+      '･_･`)     $(bug)   $(bug)   ',
+      '´･_･`)    $(bug)   $(bug)$(bug)',
+      '(´･_･`)   $(bug)$(bug)      ',
+      ' (´･_･`)  $(bug)$(bug)   $(bug)',
+      '  (´･_･`) $(bug)$(bug)$(bug)   '
+    ]
   ]
 }
 
