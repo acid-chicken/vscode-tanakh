@@ -45,7 +45,7 @@ class Tanakh {
 
   private pattern = 0
 
-  private counter = 0
+  private counter = -1
 
   private faces = [
     [
