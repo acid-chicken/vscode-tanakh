@@ -1,0 +1,13 @@
+plugins:
+  editorconfig:
+    enabled: true
+    channel: beta
+    config:
+      editorconfig: .editorconfig
+  markdownlint:
+    enabled: true
+  nodesecurity:
+    enabled: true
+  tslint:
+    enabled: true
+    config: tslint.yaml
