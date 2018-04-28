@@ -1,6 +1,17 @@
 ---
-extends: "tslint:recommended"
+extends: tslint:recommended
 rules:
+  max-line-length:
+    - true
+    - 4096
+  no-unused-expression: false
+  quotemark:
+    - true
+    - single
+    - avoid-escape
   semicolon:
-    - false
-    - "always"
+    - true
+    - never
+  trailing-comma:
+    - true
+    - never
