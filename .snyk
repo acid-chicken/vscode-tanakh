@@ -6,3 +6,7 @@ patch:
   SNYK-JS-HTTPSPROXYAGENT-469131:
     - vscode > vscode-test > https-proxy-agent:
         patched: '2019-10-07T01:17:18.046Z'
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-07T21:02:00.607Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-07T21:02:00.607Z'
